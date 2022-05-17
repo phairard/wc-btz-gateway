@@ -1,0 +1,44 @@
+<html>
+  <head></head>
+  <body>
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+    <button onclick="quote()">Call Quote</button>
+    <h4>Request</h4>
+    <code id="request-payload"></code>
+    <h4>Response</h4>
+    <code id="response"></code>
+    <script>
+      function quote() {
+        const data = JSON.stringify({
+          productId: 1,
+          targetAmount: 100
+        })
+
+        document.getElementById('request-payload').innerHTML = data
+        $.ajax({
+          type: 'post',
+          contentType: 'application/json',
+          headers: {
+            'x-btz-token': '6870514e-10b5-4c91-a88a-a72abd0755a1'
+          },
+          url: 'https://gateway.bitazza.com/api/partner/quote',
+          data,
+          dataType: 'json',
+          success: function (result) {
+            // CallBack(result);
+            document.getElementById('response').innerHTML =
+              JSON.stringify(result)
+            console.log(result)
+          },
+          error: function (error) {
+            console.log(error)
+          }
+        })
+      }
+    </script>
+  </body>
+</html>
